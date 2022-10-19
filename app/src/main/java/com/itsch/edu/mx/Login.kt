@@ -8,7 +8,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.itsch.edu.mx.DataClass.Usuario
 
 class Login : AppCompatActivity() {
     private lateinit var correo: TextInputLayout
@@ -17,6 +19,8 @@ class Login : AppCompatActivity() {
     private lateinit var btnIngresar: MaterialButton
     private lateinit var btnNoEstoyRegistrado: MaterialButton
 
+    private lateinit var usuario: Usuario
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,9 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         auth = Firebase.auth
+
+        //Acceso a la base de datos CloudFirestore
+        val db = Firebase.firestore
 
         correo = findViewById(R.id.txtCorreoXML)
         password = findViewById(R.id.txtPassXML)
@@ -45,6 +52,19 @@ class Login : AppCompatActivity() {
                     password.editText?.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
+                        db.collection("usuarios")
+                            .whereEqualTo("correo", correo.editText?.text.toString())
+                            .get()
+                            .addOnSuccessListener { documents ->
+                                for (document in documents) {
+                                    usuario = Usuario(
+                                        "${document.data.get("correo")}",
+                                        "${document.data.get("nombre")}",
+                                        "${document.data.get("apaterno")}",
+                                        "${document.data.get("amaterno")}",
+                                    )
+                                }
+                            }
                         val intent = Intent(this, Tienda::class.java)
                         startActivity(intent)
                     } else {
