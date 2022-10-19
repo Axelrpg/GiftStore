@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "545281901873",
+    "project_id": "giftstore-b5e21",
+    "storage_bucket": "giftstore-b5e21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545281901873:android:c163287134a21f39275c10",
+        "android_client_info": {
+          "package_name": "com.itsch.edu.mx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSJeKMVO2_0C6r-syde6YuzDb_jigJ0So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545281901873:android:ef95106a1cc425f6275c10",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.e305"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSJeKMVO2_0C6r-syde6YuzDb_jigJ0So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
