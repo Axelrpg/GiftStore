@@ -38,8 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="30dp"
             android:orientation="vertical">
 
@@ -75,6 +75,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +103,30 @@
                 android:textColor="#1b4a56"
                 android:textSize="16sp"
                 android:textStyle="italic" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="100dp"
+                android:backgroundTint="#3b5998"
+                android:text="Registrar con Facebook"
+                app:icon="@drawable/facebook"
+                app:iconSize="30dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoogleXML"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@color/white"
+                android:text="Registrar con Google"
+                android:textColor="@color/black"
+                app:icon="@drawable/google"
+                app:iconSize="30dp"
+                app:iconTintMode="multiply" />
+
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

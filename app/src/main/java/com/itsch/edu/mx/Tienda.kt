@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.itsch.edu.mx.Adaptadores.AdaptadorArtesania
+import com.itsch.edu.mx.Adaptadores.AdaptadorPerfumes
 import com.itsch.edu.mx.DataClass.Producto
 import com.itsch.edu.mx.DataClass.Usuario
 
@@ -19,10 +20,13 @@ class Tienda : AppCompatActivity() {
     private lateinit var nombreCliente: TextView
 
     private lateinit var rvArtesanias: RecyclerView
+    private lateinit var rvPerfumes: RecyclerView
 
     private lateinit var listaArtesanias: ArrayList<Producto>
+    private lateinit var listaPerfumes: ArrayList<Producto>
 
     private lateinit var adaptadorArtesania: AdaptadorArtesania
+    private lateinit var adaptadorPerfumes: AdaptadorPerfumes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +45,18 @@ class Tienda : AppCompatActivity() {
         rvArtesanias = findViewById(R.id.rvArtesanias)
         rvArtesanias.setHasFixedSize(true)
 
+        rvPerfumes = findViewById(R.id.rvPerfumes)
+        rvPerfumes.setHasFixedSize(true)
+
         //RecyclerView horizontal
         rvArtesanias.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
+        rvPerfumes.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
         listaArtesanias = ArrayList()
+        listaPerfumes = ArrayList()
 
         listaArtesanias.add(
             Producto(
@@ -80,8 +91,22 @@ class Tienda : AppCompatActivity() {
             )
         )
 
+        listaPerfumes.add(
+            Producto(
+                R.drawable.artesania01,
+                "DIOR Savauge",
+                "Xico-Talavera Hoja",
+                4390.0,
+                "Lorem ipsum",
+                "Perfumes"
+            )
+        )
+
         adaptadorArtesania = AdaptadorArtesania(listaArtesanias)
         rvArtesanias.adapter = adaptadorArtesania
+
+        adaptadorPerfumes = AdaptadorPerfumes(listaPerfumes)
+        rvPerfumes.adapter = adaptadorPerfumes
 
         btnSalir.setOnClickListener {
             val intent = Intent(this, Login::class.java)

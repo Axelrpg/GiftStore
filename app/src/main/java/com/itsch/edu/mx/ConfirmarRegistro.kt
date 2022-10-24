@@ -65,7 +65,7 @@ class ConfirmarRegistro : AppCompatActivity() {
                         val intent = Intent(this, Login::class.java)
                         db.collection("usuarios")
                             .document(correo.toString())
-                            .set(usuario)  //UID
+                            .set(usuario)
                         startActivity(intent)
                     } else {
                         showAlert()

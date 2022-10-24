@@ -5,6 +5,7 @@
     <string name="texto03">No estoy registrado</string>
     <string name="texto04">Ya estoy registrado</string>
     <string name="texto05">Registrarme</string>
+    <string name="texto06">Registrarme con Google</string>
     <string name="hint01">Correo electronico</string>
     <string name="hint02">Contraseña</string>
     <string name="hint03">Nombre(s)</string>
