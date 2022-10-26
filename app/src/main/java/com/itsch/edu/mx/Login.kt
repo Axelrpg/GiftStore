@@ -101,6 +101,7 @@ class Login : AppCompatActivity() {
                                 }
                             }
                         val intent = Intent(this, Tienda::class.java)
+                        intent.putExtra("usuario", usuario)
                         startActivity(intent)
                     } else {
                         showAlert()
