@@ -14,34 +14,13 @@
       },
       "oauth_client": [
         {
-          "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDSJeKMVO2_0C6r-syde6YuzDb_jigJ0So"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:545281901873:android:ef95106a1cc425f6275c10",
-        "android_client_info": {
-          "package_name": "mx.tecnm.cdhidalgo.e305"
-        }
-      },
-      "oauth_client": [
+          "client_id": "545281901873-5crcqt2a2n1v6o3mb6uvvmoh2av6cg25.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.itsch.edu.mx",
+            "certificate_hash": "e2d3bc3e2b1cad8406ccb0d305b44eab085aa8d9"
+          }
+        },
         {
           "client_id": "545281901873-00oh3hdtpfsrkmvtiee8krvgilsfpo4l.apps.googleusercontent.com",
           "client_type": 3
