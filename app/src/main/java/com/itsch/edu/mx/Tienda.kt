@@ -335,6 +335,34 @@ class Tienda : AppCompatActivity() {
         adaptadorPulseras = AdaptadorPulseras(listaPulseras)
         rvPulseras.adapter = adaptadorPulseras
 
+        adaptadorArtesania.onProductoClick = {
+            val intent = Intent(this, DetalleProducto::class.java)
+            intent.putExtra("producto", it)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        adaptadorPerfumes.onProductoClick = {
+            val intent = Intent(this, DetalleProducto::class.java)
+            intent.putExtra("producto", it)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        adaptadorBolsos.onProductoClick = {
+            val intent = Intent(this, DetalleProducto::class.java)
+            intent.putExtra("producto", it)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        adaptadorPulseras.onProductoClick = {
+            val intent = Intent(this, DetalleProducto::class.java)
+            intent.putExtra("producto", it)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
         btnSalir.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
