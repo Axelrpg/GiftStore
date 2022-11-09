@@ -29,6 +29,7 @@ class DetalleProducto : AppCompatActivity() {
 
         val usuario = intent.getParcelableExtra<Usuario>("usuario")
         val producto = intent.getParcelableExtra<Producto>("producto")
+        val misCompras = intent.getParcelableArrayListExtra<Producto>("misCompras")
 
         nombreCliente.text = "Cliente: ${usuario?.nombre} ${usuario?.apaterno}" +
                 "${usuario?.amaterno}"
@@ -48,11 +49,15 @@ class DetalleProducto : AppCompatActivity() {
         btnRegresar.setOnClickListener {
             val intent = Intent(this, Tienda::class.java)
             intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
             startActivity(intent)
         }
 
         btnCarrito.setOnClickListener {
-
+            val intent = Intent(this, Carrito::class.java)
+            intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
+            startActivity(intent)
         }
 
         btnComprar.setOnClickListener {

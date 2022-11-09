@@ -6,9 +6,16 @@
     <string name="texto04">Ya estoy registrado</string>
     <string name="texto05">Registrarme</string>
     <string name="texto06">Registrarme con Google</string>
+
     <string name="hint01">Correo electronico</string>
     <string name="hint02">Contraseña</string>
     <string name="hint03">Nombre(s)</string>
     <string name="hint04">Apellido paterno</string>
     <string name="hint05">Apellido materno</string>
+
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
 </resources>

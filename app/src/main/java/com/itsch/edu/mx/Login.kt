@@ -1,13 +1,20 @@
 package com.itsch.edu.mx
 
-import android.content.ContentProvider
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,15 +23,14 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
-import com.google.firebase.auth.FirebaseAuth.getInstance
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.itsch.edu.mx.DataClass.Usuario
-import java.security.Provider
+import kotlin.math.log
 
 class Login : AppCompatActivity() {
     private lateinit var correo: TextInputLayout
@@ -35,9 +41,13 @@ class Login : AppCompatActivity() {
 
     private lateinit var btnGoogle: MaterialButton
 
+    private lateinit var btnFacebook: MaterialButton
+
     lateinit var mGoogleSignInClient: GoogleSignInClient
     val Req_Code: Int = 123
     var firebaseAuth = FirebaseAuth.getInstance()
+
+    private val callbackManager = CallbackManager.Factory.create()
 
     private lateinit var usuario: Usuario
 
@@ -60,6 +70,8 @@ class Login : AppCompatActivity() {
 
         btnGoogle = findViewById(R.id.btnGoogleXML)
 
+        btnFacebook = findViewById(R.id.btnFacebookXML)
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -71,6 +83,35 @@ class Login : AppCompatActivity() {
 
         btnGoogle.setOnClickListener {
             signInGoogle()
+        }
+
+        btnFacebook.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onCancel() {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        Log.d(TAG, error.toString())
+                        showAlert()
+                    }
+
+                    override fun onSuccess(result: LoginResult) {
+                        result?.let {
+                            val token = it.accessToken
+                            val credential = FacebookAuthProvider.getCredential(token.token)
+                            FirebaseAuth.getInstance().signInWithCredential(credential)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        showHome(it.result?.user?.email ?: "")
+                                    }
+                                }
+                        }
+                    }
+
+                })
         }
 
         btnNoEstoyRegistrado.setOnClickListener {
@@ -99,10 +140,10 @@ class Login : AppCompatActivity() {
                                         "${document.data.get("amaterno")}",
                                     )
                                 }
+                                val intent = Intent(this, Tienda::class.java)
+                                intent.putExtra("usuario", usuario)
+                                startActivity(intent)
                             }
-                        val intent = Intent(this, Tienda::class.java)
-                        intent.putExtra("usuario", usuario)
-                        startActivity(intent)
                     } else {
                         showAlert()
                     }
@@ -120,12 +161,20 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun showHome(email: String) {
+        val intent = Intent(this, Tienda::class.java).apply {
+            putExtra("email", email)
+        }
+        startActivity(intent)
+    }
+
     private fun signInGoogle() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Req_Code)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -164,6 +213,7 @@ class Login : AppCompatActivity() {
             finish()
         }
     }
+
 }
 
 

@@ -7,12 +7,22 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.itsch.edu.mx.Adaptadores.AdaptadorArtesania
 import com.itsch.edu.mx.Adaptadores.AdaptadorBolsos
 import com.itsch.edu.mx.Adaptadores.AdaptadorPerfumes
 import com.itsch.edu.mx.Adaptadores.AdaptadorPulseras
 import com.itsch.edu.mx.DataClass.Producto
 import com.itsch.edu.mx.DataClass.Usuario
+
+enum class ProviderType {
+    BASIC,
+    GOOGLE,
+    FACEBOOK
+}
 
 class Tienda : AppCompatActivity() {
 
@@ -36,6 +46,14 @@ class Tienda : AppCompatActivity() {
     private lateinit var adaptadorPerfumes: AdaptadorPerfumes
     private lateinit var adaptadorPulseras: AdaptadorPulseras
 
+    private lateinit var misCompras: ArrayList<Producto>
+
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    private val auth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tienda)
@@ -46,9 +64,16 @@ class Tienda : AppCompatActivity() {
         nombreCliente = findViewById(R.id.tvNombreCliente)
 
         val usuario = intent.getParcelableExtra<Usuario>("usuario")
+        val comprarProducto = intent.getParcelableExtra<Producto>("compraProducto")
+        val listaCompras = intent.getParcelableArrayListExtra<Producto>("misCompras")
 
-        nombreCliente.text = "${usuario?.nombre} ${usuario?.apaterno}" +
-                "${usuario?.amaterno}"
+        nombreCliente.text = "${usuario?.nombre} ${usuario?.apaterno} ${usuario?.amaterno}"
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         rvArtesanias = findViewById(R.id.rvArtesanias)
         rvArtesanias.setHasFixedSize(true)
@@ -79,6 +104,15 @@ class Tienda : AppCompatActivity() {
         listaBolsos = ArrayList()
         listaPerfumes = ArrayList()
         listaPulseras = ArrayList()
+
+        misCompras = ArrayList()
+
+        if (comprarProducto != null) {
+            if (listaCompras != null) {
+                misCompras = listaCompras
+            }
+            misCompras.add(comprarProducto)
+        }
 
         listaArtesanias.add(
             Producto(
@@ -339,6 +373,7 @@ class Tienda : AppCompatActivity() {
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("producto", it)
             intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
             startActivity(intent)
         }
 
@@ -346,6 +381,7 @@ class Tienda : AppCompatActivity() {
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("producto", it)
             intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
             startActivity(intent)
         }
 
@@ -353,6 +389,7 @@ class Tienda : AppCompatActivity() {
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("producto", it)
             intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
             startActivity(intent)
         }
 
@@ -360,14 +397,27 @@ class Tienda : AppCompatActivity() {
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("producto", it)
             intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
             startActivity(intent)
         }
 
         btnSalir.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
+
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                finish()
+            }
+
         }
 
-        btnCarrito.setOnClickListener { }
+        btnCarrito.setOnClickListener {
+            val intent = Intent(this, Carrito::class.java)
+            intent.putExtra("usuario", usuario)
+            intent.putExtra("misCompras", misCompras)
+            startActivity(intent)
+        }
     }
 }

@@ -105,6 +105,7 @@
                 android:textStyle="italic" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFacebookXML"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
